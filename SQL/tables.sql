@@ -1,0 +1,56 @@
+CREATE TABLE Admin.Students (
+    StudentID NUMBER PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    DateOfBirth DATE NOT NULL,
+    STREET VARCHAR(100) NOT NULL,
+    CITY  VARCHAR(100) NOT NULL,
+    GOVERNMENT  VARCHAR(100) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
+    Phone VARCHAR(15) UNIQUE NOT NULL,
+    SEMESTER NUMBER NOT NULL,
+    GRADE_LEVEL NUMBER NOT NULL,
+    DepartmentID NUMBER NOT NULL, 
+    FOREIGN KEY (DepartmentID) REFERENCES Admin.DEPARTMENTS(DepartmentID)
+);
+CREATE TABLE Admin.DEPARTMENTS (
+    DepartmentID NUMBER PRIMARY KEY,
+    DepartmentName VARCHAR(100) NOT NULL,
+    HeadOfDepartment VARCHAR(50) NOT NULL
+);
+CREATE TABLE Admin.COURSES (
+    CourseID NUMBER PRIMARY KEY,
+    CourseName VARCHAR(100) NOT NULL,
+    Credits NUMBER NOT NULL,
+    GradingScale NUMBER NOT NULL
+);
+CREATE TABLE Admin.STUDENT_COURSE (
+    StudentID NUMBER,
+    CourseID NUMBER,
+    EnrolmentDate DATE, 
+    Semester NUMBER NOT NULL,
+    Grade NUMBER,
+    Year NUMBER NOT NULL,
+    Status VARCHAR(15),
+    PRIMARY KEY (StudentID, CourseID, EnrolmentDate),
+    FOREIGN KEY (StudentID) REFERENCES Admin.STUDENTS(StudentID),
+    FOREIGN KEY (CourseID) REFERENCES Admin.COURSES(CourseID)
+);
+CREATE TABLE Admin.DEPARTMENT_COURSE (
+    DepartmentID NUMBER,
+    CourseID NUMBER,
+    PRIMARY KEY (DepartmentID, CourseID),
+    FOREIGN KEY (DepartmentID) REFERENCES Admin.DEPARTMENTS(DepartmentID),
+    FOREIGN KEY (CourseID) REFERENCES Admin.COURSES(CourseID)
+);
+CREATE TABLE Admin.STUDENT_HISTORY (
+    StudentID NUMBER,
+    Semester NUMBER NOT NULL,
+    GradeLevel NUMBER NOT NULL,
+    GPA NUMBER,
+    EnrollmentDate DATE NOT NULL,
+    FOREIGN KEY (StudentID) REFERENCES Admin.STUDENTS(StudentID)
+);
+
+
+
